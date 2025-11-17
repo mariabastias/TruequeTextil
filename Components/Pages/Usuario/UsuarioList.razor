@@ -1,0 +1,109 @@
+﻿@using TruequeTextil.Models
+
+@*----------------------*@
+@*LISTA DE USUARIOS*@
+@*----------------------*@
+
+@if (UsuariosListParametro.Any())
+{
+	<div>
+		<h4>Usuarios (@UsuariosListParametro.Count)</h4>
+		<ul>
+			@foreach (var item in UsuariosListParametro)
+			{
+				<li>
+					@* SI NO SE ESTÁ EDITANDO USUARIO *@
+					@if (!item.Editando)
+					{
+						<ul>
+
+							<li>
+								<strong>Nombre: </strong> @item.Nombre
+							</li>
+
+							<li>
+								<strong>Apellido: </strong> @item.Apellido
+							</li>
+
+							<li>
+								<strong>NumeroTelefono: </strong> @item.NumeroTelefono
+							</li>
+
+							<li>
+								<strong>CorreoElectronico: </strong> @item.CorreoElectronico
+							</li>
+
+							<button @onclick=@(() => EliminarUsuarioParametro.InvokeAsync(item))>Eliminar Usuario</button>
+							<button @onclick=@(() => EditarUsuarioParametro.InvokeAsync(item))>Editar Usuario</button>
+						</ul>
+
+					}
+					else
+			       @*SI SE ESTÁ EDITANDO LA TAREA*@
+					{
+						<EditForm Model="UsuarioEditadoParametro" OnValidSubmit="() => GuardarUsuarioEditadoParametro.InvokeAsync(item)">
+							<DataAnnotationsValidator />
+							<ul>
+								<li>
+									<div>
+										<label>Nombre</label>
+										<InputText @bind-Value="UsuarioEditadoParametro.Nombre" />
+										<ValidationMessage For="@(() => UsuarioEditadoParametro.Nombre)" />
+									</div>
+								</li>
+
+								<li>
+									<div>
+										<label>Apellido</label>
+										<InputText @bind-Value="UsuarioEditadoParametro.Apellido" />
+										<ValidationMessage For="@(() => UsuarioEditadoParametro.Apellido)" />
+									</div>
+								</li>
+
+								<li>
+									<div>
+										<label>Número Telefónico</label>
+										<InputText @bind-Value="UsuarioEditadoParametro.NumeroTelefono" />
+										<ValidationMessage For="@(() => UsuarioEditadoParametro.NumeroTelefono)" />
+									</div>
+								</li>
+
+								<li>
+									<div>
+										<label>Correo electrónico</label>
+										<InputText @bind-Value="UsuarioEditadoParametro.CorreoElectronico" />
+										<ValidationMessage For="@(() => UsuarioEditadoParametro.CorreoElectronico)" />
+									</div>
+								</li>
+
+							</ul>
+
+							<button type="submit">Editar</button>
+							<button @onclick=@(() => CancelarEdicionParametro.InvokeAsync(item))>Cancelar</button>
+						</EditForm>
+					}
+
+				</li>
+
+			}
+
+		</ul>
+	</div>
+}
+else
+{
+	<h3>No hay usuarios registrados</h3>
+
+}
+
+@code
+{
+	[Parameter] public required List<Usuario> UsuariosListParametro {get; set;}
+	[Parameter] public required EventCallback<Usuario> EliminarUsuarioParametro { get; set; }
+	[Parameter] public required EventCallback<Usuario> EditarUsuarioParametro { get; set; }
+
+	[Parameter] public required Usuario UsuarioEditadoParametro { get; set; } 
+	[Parameter] public required EventCallback<Usuario> GuardarUsuarioEditadoParametro { get; set; }
+	[Parameter] public required EventCallback<Usuario> CancelarEdicionParametro { get; set; }
+
+}

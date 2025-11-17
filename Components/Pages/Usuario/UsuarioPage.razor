@@ -1,0 +1,86 @@
+﻿@using TruequeTextil.Models
+@*el namespace "TruequeTextil.Models" viene de la clase Usuario *@
+
+@page "/Usuario"
+
+<PageTitle>Usuario</PageTitle>
+
+@*primero va el nombre de la página del componente, luego el nombre del parámetro y luego la propiedad (#region propiedades) *@
+<UsuarioForm 
+	UsuarioFormParametro="usuario" 
+	AgregarUsuarioParametro="AgregarUsuarioValidado"/>
+
+<UsuarioList
+	UsuariosListParametro="Usuarios"
+	EliminarUsuarioParametro="EliminarUsuario"
+	EditarUsuarioParametro="EditarUsuario"
+	UsuarioEditadoParametro="usuarioEditado"
+	GuardarUsuarioEditadoParametro="GuardarUsuarioEditado"
+	CancelarEdicionParametro="CancelarEdicion" />
+
+
+
+@code {
+
+	#region Propiedades
+
+	Usuario usuario = new();
+
+	public List<Usuario> Usuarios = new();
+
+	Usuario usuarioEditado = new();
+
+	#endregion
+
+	#region Métodos
+
+	public void AgregarUsuarioValidado()
+	{
+		Usuarios.Add(
+			new Usuario
+				{
+					Nombre = usuario.Nombre,
+					Apellido = usuario.Apellido,
+					NumeroTelefono = usuario.NumeroTelefono,
+					CorreoElectronico = usuario.CorreoElectronico
+
+				}
+
+		);
+		//limpiar formulario
+		usuario = new();
+
+	}
+
+	public void EditarUsuario(Usuario usuario)
+	{
+		usuario.Editando = true;
+		usuarioEditado.Nombre = usuario.Nombre;
+		usuarioEditado.Apellido = usuario.Apellido;
+		usuarioEditado.NumeroTelefono = usuario.NumeroTelefono;
+		usuarioEditado.CorreoElectronico = usuario.CorreoElectronico;
+
+	}
+
+	public void EliminarUsuario(Usuario usuario)
+	{
+		Usuarios.Remove(usuario);
+	}
+
+	public void GuardarUsuarioEditado(Usuario usuario)
+	{
+		usuario.Nombre = usuarioEditado.Nombre;
+		usuario.Apellido = usuarioEditado.Apellido;
+		usuario.NumeroTelefono = usuarioEditado.NumeroTelefono;
+		usuario.CorreoElectronico = usuarioEditado.CorreoElectronico;
+		usuario.Editando = false;
+	}
+
+	public void CancelarEdicion(Usuario usuario)
+	{
+		usuario.Editando = false;
+	}
+
+	#endregion
+
+}

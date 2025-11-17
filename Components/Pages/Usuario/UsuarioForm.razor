@@ -1,0 +1,52 @@
+﻿@using TruequeTextil.Models
+
+@*----------------------*@
+@*FORMULARIO*@
+@*----------------------*@
+<br />
+<hr />
+<h3>Regístrate</h3>
+<div>
+
+	<EditForm Model="UsuarioFormParametro" 
+		OnValidSubmit="AgregarUsuarioParametro">
+		<DataAnnotationsValidator />
+
+		<div>
+			<label>Nombre</label>
+			<InputText @bind-Value="UsuarioFormParametro.Nombre" placeholder="agregar nombre..." />
+			<ValidationMessage For="@(() => UsuarioFormParametro.Nombre)" />
+		</div>
+
+		<div>
+			<label>Apellido</label>
+			<InputText @bind-Value="UsuarioFormParametro.Apellido" placeholder="agregar apellido..." />
+			<ValidationMessage For="@(() => UsuarioFormParametro.Apellido)" />
+		</div>
+
+		<div>
+			<label>Número Telefónico</label>
+			<InputText @bind-Value="UsuarioFormParametro.NumeroTelefono" placeholder="agregar número telefónico" />
+			<ValidationMessage For="@(() => UsuarioFormParametro.NumeroTelefono)" />
+		</div>
+
+		<div>
+			<label>Correo electrónico</label>
+			<InputText @bind-Value="UsuarioFormParametro.CorreoElectronico" placeholder="agregar correo electrónico..." />
+			<ValidationMessage For="@(() => UsuarioFormParametro.CorreoElectronico)" />
+		</div>
+
+		<button type="submit">Crear Cuenta</button>
+	</EditForm>
+</div>
+
+<br />
+<hr />
+<br />
+
+@code
+{
+	[Parameter] public required Usuario UsuarioFormParametro { get; set; }
+	[Parameter] public required EventCallback AgregarUsuarioParametro { get; set; }
+	
+}
