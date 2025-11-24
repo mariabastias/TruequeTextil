@@ -1,4 +1,5 @@
 using TruequeTextil.Components;
+using TruequeTextil.Components.Pages.Usuario;
 
 namespace TruequeTextil
 {
@@ -11,6 +12,9 @@ namespace TruequeTextil
             // Add services to the container.
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
+
+            builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 
             var app = builder.Build();
 

@@ -2,6 +2,7 @@
 @*el namespace "TruequeTextil.Models" viene de la clase Usuario *@
 
 @page "/Usuario"
+@inject IUsuarioService UsuarioService
 
 <PageTitle>Usuario</PageTitle>
 
@@ -32,7 +33,23 @@
 
 	#endregion
 
+	#region Ciclo de vida (componente)
+
+	protected override async Task OnInitializedAsync()
+	{
+		await CargarUsuarios();	
+	}
+
+	#endregion
+
 	#region Métodos
+
+
+
+	private async Task CargarUsuarios()
+	{
+		Usuarios = await UsuarioService.ObtenerUsuarios();
+	}
 
 	public void AgregarUsuarioValidado()
 	{
